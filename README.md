@@ -15,5 +15,5 @@ java -jar build/libs/kafka-prometheus-exporter-java-0.0.1.jar kafka-prometheus-e
 
 Example run:
 ```
-java -jar ./kafka-prometheus-exporter-java-0.0.1.jar kafka-prometheus-exporter.properties metrics http://victoriametrics.dev.confluent:8428/api/v1/write
+java -jar build/libs/kafka-prometheus-exporter-java-0.0.1.jar kafka-prometheus-exporter.properties metrics http://victoriametrics.dev.confluent:8428/api/v1/write
 ```
