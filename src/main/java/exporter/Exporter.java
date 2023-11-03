@@ -8,14 +8,14 @@ import java.util.Properties;
 
 import java.io.*;
 import java.nio.file.*;
-import java.util.*;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +38,13 @@ public class Exporter {
         // Example: http://victoriametrics.dev.confluent:8428/api/v1/write
         final String targetUrl = args[2];
 
+        // Validate targetUrl
+        Pattern urlPattern = Pattern.compile("^https?://[a-zA-Z0-9.-]+(?:\\:[0-9]+)?(?:/[^\\s]*)?$");
+        Matcher urlMatcher = urlPattern.matcher(targetUrl);
+        if (!urlMatcher.matches()) {
+            throw new IllegalArgumentException("Invalid target URL: " + targetUrl);
+        }
+        
         logger.info("Reading from topic: {}, exporting to URL: {}", topic, targetUrl);
 
         // Load consumer configuration settings from a local file
